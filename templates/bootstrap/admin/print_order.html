@@ -1,0 +1,198 @@
+{config_load file="$language/lang_$language.conf" section="print_order"}
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+    <title>{#title#} {$oID}</title>
+    <meta http-equiv="Content-Type" content="text/html; charset={$charset}">
+    <style type="text/css">
+    {literal}
+    body {font-family: Verdana, Arial, Helvetica, sans-serif;}
+    .small {font-size: 0.6em;}
+    .normal {font-size: 0.8em;}
+    .large {font-size: 1em; font-weight:bold;}
+    td .border {border-right: 2px solid; border-bottom: 2px solid; border-color: #fff;}
+    {/literal}
+    </style>
+</head>
+<body onload="window.print()">
+<table width="100%" align="center" border="0" cellspacing="0" cellpadding="10">
+  <tr valign="top"> 
+    <td width="53%" align="left">Firma<br />Anschrift<br />PLZ Ort<br /><br /><br /></td>
+    <td width="47%" align="right"><img src="{$logo_path}logo.gif" alt="Unser Firmenlogo" border="0" /></td>
+  </tr>
+  <tr>
+      <td colspan="2">Danke für Ihre Bestellung. Ihre Bestell-Informationen erhalten Sie nachfolgend.</td>
+  </tr>    
+  <tr bgcolor="white"> 
+    <td colspan="2"><h2>Auftrag</h2></td>
+  </tr>
+</table>
+<table border=0 cellspacing=0 cellpadding=2 width=100%>
+  <!-- begin customer information --> 
+  <tr bgcolor="#CCCCCC"> 
+    <td colspan="2"><b>Bestellungen</b></td>
+  </tr>
+  <tr> 
+    <td>Bestellnummer:</td><td>{$oID}</td>
+  </tr>
+  <tr> 
+    <td>Bestelldatum:</td><td>{$DATE}</td>
+  </tr>
+  {if $PAYMENT_METHOD}
+  <tr> 
+    <td>Zahlungsart:</td><td>{$PAYMENT_METHOD}</td>
+  </tr>
+  {/if}
+  <!-- end customer information --> 
+  <!-- begin 2 column bill-ship to --> 
+  <tr>
+    <td colspan="2">&nbsp;</td>
+  </tr>
+  <tr bgcolor="#CCCCCC"> 
+    <td colspan="2"><b>Kundeninformation</b></td>
+  </tr>
+  <tr valign="top"> 
+    <td width=50%><!-- begin shipto -->   
+      <table width=100% cellspacing=0 cellpadding=2 border=0>
+        	<tr> 
+            <td><b>Lieferadresse</b></td>
+	        </tr>
+	        <tr> 
+	          <td>{$address_label_shipping}</td>
+	        </tr>
+	     </table>
+       <!-- end shipto --> 
+   </td>
+    <td width=50%><!-- begin billto --> 
+      <table width=100% border=0 cellpadding=2 cellspacing=0>
+        <tr> 
+          {if $address_label_payment}
+          <td><b>Rechnungsadresse</b></td>
+          {/if}
+        </tr>
+        <tr> 
+            {if $address_label_payment}
+	          <td>{$address_label_payment}</td>
+            {/if}
+        </tr>
+      </table>
+      <!-- end billto --> 
+      <!-- end customer information --> 
+    </td>
+  </tr>
+  <tr> 
+    <td colspan="2">&nbsp;</td>
+  </tr>
+  <tr> 
+    <td colspan="2"> 
+      <table width="100%" border="0" cellspacing="0" cellpadding="1">
+         
+      </table>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2">&nbsp;</td>
+  </tr>
+  <!-- begin order items information --> 
+  <tr bgcolor="#CCCCCC"> 
+    <td colspan="2"><b>Bestellte Artikel</b></td>
+  </tr>
+  <tr> 
+    <td colspan="2"> 
+      <table width=100% cellspacing=0 cellpadding=2 border=0>
+        <tr align="center">
+          <th>Anzahl</th>
+          {if $smarty.const.SHOW_IMAGES_IN_EMAIL == 'true'}
+          <th>Bild</th>
+          {/if}
+	        <th>Name</th>
+	        <th>Artikelnummer</th>
+			    <th>Preis</th>
+			    <th>Zwischensumme</th>
+       </tr>
+      {foreach name=aussen item=order_values from=$order_data} 
+	     <tr align="center">
+		      <td>{$order_values.PRODUCTS_QTY}</td>
+          {if $smarty.const.SHOW_IMAGES_IN_EMAIL == 'true'}
+          <td>
+            {if $order_values.PRODUCTS_IMAGE neq ''}              
+                <img src="{$img_path}{$order_values.PRODUCTS_IMAGE}" style="{$smarty.const.SHOW_IMAGES_IN_EMAIL_STYLE}">              
+            {/if}
+          </td>
+          {/if}
+		      <td>{$order_values.PRODUCTS_NAME}</td>
+            {if $order_values.PRODUCTS_ORDER_DESCRIPTION neq ''}<br />{$order_values.PRODUCTS_ORDER_DESCRIPTION}{/if}
+            {if $order_values.PRODUCTS_SHIPPING_TIME neq ''}<br />Lieferzeit: {$order_values.PRODUCTS_SHIPPING_TIME}{/if}
+            {if $order_values.PRODUCTS_ATTRIBUTES neq ''}<br /><em>{$order_values.PRODUCTS_ATTRIBUTES}</em>{/if}
+		      <td>{$order_values.PRODUCTS_MODEL}<br />
+            <em>{$order_values.PRODUCTS_ATTRIBUTES_MODEL}</em>
+          </td>
+		      <td>{$order_values.PRODUCTS_SINGLE_PRICE}</td>
+		      <td>{$order_values.PRODUCTS_PRICE}</td>
+	     </tr>
+      {/foreach} 
+        <tr> 
+          <td colspan=5 align="right">&nbsp;&nbsp;</td>
+          <td>&nbsp;</td>
+        </tr>
+        {foreach name=aussen item=order_total_values from=$order_total}
+        <tr> 
+          <td colspan=4 align="right">{$order_total_values.TITLE}</td>
+          <td>{$order_total_values.TEXT}</td>
+        </tr>
+        {/foreach}
+      </table>
+    </td>
+  </tr>
+  <!-- end order items information --> 
+  <!-- begin customer note -->
+  <tr>
+    <td colspan="2">&nbsp;</td>
+  </tr>
+  {if $COMMENTS}
+  <tr bgcolor="#CCCCCC">
+    <td colspan="2"><b>Anmerkungen des Kunden zur Bestellung:</b></td>
+  </tr>
+  <tr>
+    <td colspan="2">{$COMMENTS}</td>
+  </tr>
+  {/if}
+</table>
+<table width=100% cellspacing=0 cellpadding=2 border=0>
+  <tr>
+    <td colspan="2">&nbsp;</td>
+  </tr>
+  <tr bgcolor="#CCCCCC">
+    <td colspan="2"><b>Hinweis zur Zahlungsart:</b></td>
+  </tr>
+  <tr>
+    <td colspan="2">{$PAYMENT_INFO_HTML}</td>
+  </tr>
+</table>   
+{if $DELIVERY_DUTY_INFO neq ''}
+<table width=100% cellspacing=0 cellpadding=2 border=0>
+  <tr>
+    <td colspan="2">&nbsp;</td>
+  </tr>
+  <tr bgcolor="#CCCCCC">
+    <td colspan="2"><b>Steuerhinweis:</b></td>
+  </tr>
+  <tr>
+    <td colspan="2">{#text_duty_info#}</td>
+  </tr>
+</table>
+{/if}
+<table width=100% cellspacing=0 cellpadding=2 border=0>
+  <tr>
+    <br /><br />Vielen Dank für Ihr Vertrauen, wir hoffen Sie bald wieder in unserem Shop begrüßen zu können.<br /><br />
+    <br /> 
+  </tr>
+</table>
+[SIGNATUR]
+<br /> 
+{if $REVOCATION_HTML neq ''}
+<br />
+{$REVOCATION_HTML}
+<br />
+{/if}  </body>
+</html>

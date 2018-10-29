@@ -1,0 +1,29 @@
+{config_load file="$language/lang_$language.conf" section="shopping_cart"}
+<div class="well well-small">   
+  <div class="row-fluid">
+    <div class="span2"><b>{#text_qty#}</b></div>
+    <div class="span4"><b>{#text_article#}</b></div>
+    <div class="span2 text-right"><b>{#text_single#}</b></div>
+    <div class="span2 text-right"><b>{#text_total#}</b></div>
+    <div class="span2"><b>{#text_remove#}</b></div>
+  </div>
+  {foreach name=aussen item=module_data from=$module_content} 
+  <div class="row-fluid">
+    <div class="span2">{$module_data.PRODUCTS_QTY|replace:'<input':'<input class="span10"'}</div>
+    <div class="span4">
+		<strong><a href="{$module_data.PRODUCTS_LINK}">{$module_data.PRODUCTS_NAME}</a></strong>
+		{if $module_data.ATTRIBUTES!=''} 
+        {foreach key=key_data item=item_data from=$module_data.ATTRIBUTES} 
+        <p><strong>{$item_data.NAME}:&nbsp;</strong>{$item_data.VALUE_NAME}</p>
+        {/foreach} 
+    {/if}
+    </div>
+    <div class="span2 text-right">{$module_data.PRODUCTS_SINGLE_PRICE}</div>
+    <div class="span2 text-right">{$module_data.PRODUCTS_PRICE}</div>
+    <div class="span2">{$module_data.BUTTON_DELETE}</div>
+  </div>
+  {/foreach}
+  <div class="row-fluid">
+    <div class="span10 text-right">{$UST_CONTENT}<strong>{$TOTAL_CONTENT}</strong>{if $SHIPPING_INFO}{$SHIPPING_INFO}{/if}{if $KLARNA_PPBOX}<br />{$KLARNA_PPBOX}{/if}</div>
+  </div>
+</div>

@@ -1,0 +1,16 @@
+<IfModule mod_rewrite.c>
+  RewriteEngine off
+
+
+
+#      RewriteEngine on
+#
+#        RewriteCond %{HTTP_HOST}                 !^www\.(.*) [NC]
+#        RewriteCond %{HTTP_HOST}                 !^(.*)\.(.*)\.(.*) [NC]
+#        RewriteCond %{HTTP_HOST}                 !^localhost(.*)$ [NC]
+#        RewriteRule ^(.*)                        https://www.%{HTTP_HOST}/$1 [R=301,L]
+#
+#        RewriteCond %{SERVER_PORT} !=443
+#        RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R=301,L]
+</IfModule>
+

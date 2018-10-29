@@ -1,0 +1,24 @@
+#hardy{
+	background: -ms-radial-gradient(center, ellipse cover, rgba(255,255,255,1) 0%,rgba(255,255,255,0) 100%); /* IE10+ */
+background: radial-gradient(ellipse at center, rgba(255,255,255,1) 0%,rgba(255,255,255,0) 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#00ffffff',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+}
+
+.navbar .nav.pull-right{
+position: relative;
+top: -100px;
+
+}
+
+#support{
+	margin-bottom: 20px;
+}
+
+.container{
+	width: 1170px;
+}
+
+#ueberschrift
+{
+	margin-left: -100px;
+}

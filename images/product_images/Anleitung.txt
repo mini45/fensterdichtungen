@@ -1,0 +1,3 @@
+_1.jpg Bilder aus dem Ordnet popup_images bearbeiten und bemaßen und dort auch ablegen. (100% Größe)
+Diese Bilder dann in IrvanView 50% kleiner machen siehe: http://www.4ws-netdesign.de/eip/pages/faqs-batchverarbeitung-mit-irfanview.php
+Danach diese dann mit der Endung _1.JPG im Ordner info_images hineinfügen.

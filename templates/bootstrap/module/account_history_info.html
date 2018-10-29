@@ -1,0 +1,72 @@
+{config_load file="$language/lang_$language.conf" section="account_history_info"}
+{config_load file="$language/lang_$language.conf" section="print_order"}
+{config_load file="$language/lang_$language.conf" section="product_info"}
+<h1>{#heading_history_info#}</h1>
+<p>{$BUTTON_BACK}&nbsp;&nbsp;{$BUTTON_PRINT|replace:'<a':'<span class="btn"'|regex_replace:'/<img src.*.alt="/':'<i class="icon-print"></i>'|replace:'" /></a>':'</span>'}</p>
+<div class="well well-small">
+	<h1>{#text_oid#}{$ORDER_NUMBER} ({$ORDER_STATUS})</h1>
+	<p>{#text_date#} {$ORDER_DATE}</p>
+	<h2>{#text_shipping_address#}</h2>
+	<p>{$DELIVERY_LABEL}</p>
+	{if $BILLING_LABEL}
+	<h2>{#text_payment_address#}</h2>
+	<p>{$BILLING_LABEL}</p>
+	{/if}
+	{if $SHIPPING_METHOD!=''}
+	<h2>{#text_shipping_method#}</h2>
+	<p>{$SHIPPING_METHOD}</p>
+	{/if}
+	{if $PAYMENT_METHOD}
+	<h2>{#text_payment_method#}</h2>
+	<p>{$PAYMENT_METHOD}</p>
+	{/if}
+	{if $ORDER_COMMENTS!=''}
+	<h2>{#text_comments#}</h2>
+	<p>{$ORDER_COMMENTS}</p>
+	{/if}
+	{if $PAYMENT_INFORMATION!=''}
+	<h2>{#text_payment_info#}</h2>
+	<p>{$PAYMENT_INFORMATION}</p>
+	{/if}
+	<h2>{#title_history#}:</h2>
+	<p>{$HISTORY_BLOCK}</p>
+	<h2>{#text_products#}</h2>
+  <div class="row-fluid">
+    <div class="span1">{#head_units#}</div>
+    <div class="span5">{#head_products#}</div>
+    <div class="span2">{#head_artnr#}</div>
+    <div class="span2">{#head_single_price#}</div>
+    <div class="span2">{#head_price#}</div>
+  </div>
+  {foreach name=aussen item=order_values from=$order_data}
+  <div class="row-fluid">
+    <div class="span1">{$order_values.PRODUCTS_QTY}</div>
+    <div class="span5"><strong>{$order_values.PRODUCTS_NAME}</strong><em>{$order_values.PRODUCTS_ATTRIBUTES}</em>{if $order_values.PRODUCTS_SHIPPING_TIME neq ''}<br />{#text_shippingtime#} {$order_values.PRODUCTS_SHIPPING_TIME}<br />{/if}</div>
+    <div class="span2">{$order_values.PRODUCTS_MODEL}</br /><em>{$order_values.PRODUCTS_ATTRIBUTES_MODEL}</em></div>
+    <div class="span2">{$order_values.PRODUCTS_SINGLE_PRICE}</div>
+    <div class="span2">{$order_values.PRODUCTS_PRICE}</div>
+  </div>
+  {/foreach}
+<hr>
+  {foreach name=aussen item=order_total_values from=$order_total}
+  <div class="row-fluid">
+    <div class="span9 text-right">{$order_total_values.TITLE}</div>
+    <div class="span3"><strong>{$order_total_values.TEXT}</strong></div>
+  </div>
+	{/foreach}
+	<hr>
+	<!-- BOF - web28 - 2010-03-27 PayPal Bezahl-Link -->
+	{if $PAYPAL_LINK}	    
+		<p><div style="padding:5px;">{$PAYPAL_LINK}</div></p>		
+    {/if}
+	<!-- EOF - web28 - 2010-03-27 PayPal Bezahl-Link -->
+	<p>{$TOTAL_BLOCK}</p>
+	{if $downloads_content neq ''}
+  	<p>{$downloads_content}</p>
+	{/if}
+</div>
+{if $text_print!=''}
+<h2>{#title_print#}</h2>
+<p>{#text_print#}</p> 
+{/if}
+<p>{$BUTTON_BACK}&nbsp;&nbsp;{$BUTTON_PRINT|replace:'<a':'<span class="btn"'|regex_replace:'/<img src.*.alt="/':'<i class="icon-print"></i>'|replace:'" /></a>':'</span>'}</p>

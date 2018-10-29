@@ -1,0 +1,24 @@
+{config_load file="$language/lang_$language.conf" section="new_products"} 
+<h1>{#heading_text#}</h1>
+{* BOF - Hetfield - 2009-08-11 - show error message if no new products exist *}
+{if $NO_NEW_PRODUCTS}<p>{$NO_NEW_PRODUCTS}</p>{/if}
+{* EOF - Hetfield - 2009-08-11 - show error message if no new products exist *}
+{foreach name=aussen item=module_data from=$module_content}
+<div class="well well-small">
+<div class="row-fluid">
+  <div class="span3">
+    {if $module_data.PRODUCTS_IMAGE!=''}<a href="{$module_data.PRODUCTS_LINK}"><img  class="img-polaroid center-block" src="{$module_data.PRODUCTS_IMAGE}" alt="{$module_data.PRODUCTS_NAME}" /></a>{else}&nbsp;{/if}
+  </div>
+  <div class="span9">
+		<h2><a href="{$module_data.PRODUCTS_LINK}">{$module_data.PRODUCTS_NAME}</a></h2>
+		<div>{$module_data.PRODUCTS_SHORT_DESCRIPTION}</div>
+		<p>{$module_data.PRODUCTS_PRICE}</p>
+    <p>( {$module_data.PRODUCTS_TAX_INFO}{$module_data.PRODUCTS_SHIPPING_LINK} )</p>
+		{if $module_data.PRODUCTS_VPE}<p>{$module_data.PRODUCTS_VPE}</p>{/if}
+		{if $module_data.PRODUCTS_SHIPPING_NAME}<p>{#text_shippingtime#}{if $module_data.PRODUCTS_SHIPPING_IMAGE}<img src="{$module_data.PRODUCTS_SHIPPING_IMAGE}" alt="{$module_data.PRODUCTS_SHIPPING_NAME}" />{/if}&nbsp;{$module_data.PRODUCTS_SHIPPING_NAME}</p>{/if}
+		<p>{$module_data.PRODUCTS_BUTTON_BUY_NOW}&nbsp;&nbsp;{$module_data.PRODUCTS_BUTTON_PRODUCT_MORE}</p>
+  </div>
+</div>
+</div>
+{/foreach}
+{$NAVIGATION_BAR}

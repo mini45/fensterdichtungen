@@ -1,0 +1,11 @@
+{config_load file="$language/lang_$language.conf" section="error_handler"}
+<h1>{$ERROR}</h1>
+<p>{#text_search_again#}</p>
+{$FORM_ACTION}
+<div class="well well-small">
+    <p>{#text_search#}</p>
+    <p>{$INPUT_SEARCH|replace:'<input type':'<input class="span6" type'|regex_replace:'/maxlen.*"|size.*"/':''}</p>
+    <p>{$BUTTON_SUBMIT}</p>
+</div>
+{$FORM_END}
+<p>{$BUTTON}</p>
